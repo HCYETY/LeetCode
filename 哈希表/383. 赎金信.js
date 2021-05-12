@@ -1,22 +1,22 @@
-¸ø¶¨Ò»¸öÊê½ðÐÅ (ransom) ×Ö·û´®ºÍÒ»¸öÔÓÖ¾(magazine)×Ö·û´®£¬ÅÐ¶ÏµÚÒ»¸ö×Ö·û´® ransom ÄÜ²»ÄÜÓÉµÚ¶þ¸ö×Ö·û´® magazines ÀïÃæµÄ×Ö·û¹¹³É¡£Èç¹û¿ÉÒÔ¹¹³É£¬·µ»Ø true £»·ñÔò·µ»Ø false¡£
+ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ransom) ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ö¾(magazine)ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ïµï¿½Ò»ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ ransom ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ÉµÚ¶ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ magazines ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½É¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¹ï¿½ï¿½É£ï¿½ï¿½ï¿½ï¿½ï¿½ true ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½ falseï¿½ï¿½
 
-(ÌâÄ¿ËµÃ÷£ºÎªÁË²»±©Â¶Êê½ðÐÅ×Ö¼££¬Òª´ÓÔÓÖ¾ÉÏËÑË÷¸÷¸öÐèÒªµÄ×ÖÄ¸£¬×é³Éµ¥´ÊÀ´±í´ïÒâË¼¡£ÔÓÖ¾×Ö·û´®ÖÐµÄÃ¿¸ö×Ö·ûÖ»ÄÜÔÚÊê½ðÐÅ×Ö·û´®ÖÐÊ¹ÓÃÒ»´Î¡£)
+(ï¿½ï¿½Ä¿Ëµï¿½ï¿½ï¿½ï¿½Îªï¿½Ë²ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¼ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ã¿ï¿½ï¿½ï¿½Ö·ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½Ò»ï¿½Î¡ï¿½)
 
 
-Ê¾Àý 1£º
-ÊäÈë£ºransomNote = "a", magazine = "b"
-Êä³ö£ºfalse
+Ê¾ï¿½ï¿½ 1ï¿½ï¿½
+ï¿½ï¿½ï¿½ë£ºransomNote = "a", magazine = "b"
+ï¿½ï¿½ï¿½ï¿½ï¿½false
 
-Ê¾Àý 2£º
-ÊäÈë£ºransomNote = "aa", magazine = "ab"
-Êä³ö£ºfalse
+Ê¾ï¿½ï¿½ 2ï¿½ï¿½
+ï¿½ï¿½ï¿½ë£ºransomNote = "aa", magazine = "ab"
+ï¿½ï¿½ï¿½ï¿½ï¿½false
 
-Ê¾Àý 3£º
-ÊäÈë£ºransomNote = "aa", magazine = "aab"
-Êä³ö£ºtrue
+Ê¾ï¿½ï¿½ 3ï¿½ï¿½
+ï¿½ï¿½ï¿½ë£ºransomNote = "aa", magazine = "aab"
+ï¿½ï¿½ï¿½ï¿½ï¿½true
 
-ÌáÊ¾£º
-Äã¿ÉÒÔ¼ÙÉèÁ½¸ö×Ö·û´®¾ùÖ»º¬ÓÐÐ¡Ð´×ÖÄ¸¡£
+ï¿½ï¿½Ê¾ï¿½ï¿½
+ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½Ð¡Ð´ï¿½ï¿½Ä¸ï¿½ï¿½
 
 
 
@@ -26,22 +26,22 @@
  * @return {boolean}
  */
 var canConstruct = function(ransomNote, magazine) {
-    // ÉèÖÃ¹þÏ£±í
+    // ï¿½ï¿½ï¿½Ã¹ï¿½Ï£ï¿½ï¿½
     let hash = {};
-    //¼ÇÂ¼×Ö·û¿ÕÈ±
+    //ï¿½ï¿½Â¼ï¿½Ö·ï¿½ï¿½ï¿½È±
     for(let i = 0; i < ransomNote.length; i++) {
         let value =  ransomNote[i];
         hash[value] ? hash[value]++ : hash[value] = 1;
     }
-    //Ìî²¹¿ÕÈ±
+    //ï¿½î²¹ï¿½ï¿½È±
     for(let i = 0; i < magazine.length; i++) {
         let flag = magazine[i];
         if(hash[flag])
             hash[flag]--;
     }
-    //×îºó²é¿´¹þÏ£±í
+    //ï¿½ï¿½ï¿½é¿´ï¿½ï¿½Ï£ï¿½ï¿½
     for(let key in hash)
-        //Èç¹ûÓÐ¿ÕÈ±Ã»ÌîÂú£¬Ôò·µ»Øfalse
+        //ï¿½ï¿½ï¿½ï¿½Ð¿ï¿½È±Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½false
         if(hash[key])
             return false;
     return true;
