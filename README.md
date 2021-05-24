@@ -125,20 +125,7 @@ void bubble_sort(int num[]) {
 1. 双边循环法
 - 实现思想：采用左右双指针，第一次循环从right指针开始，让指针所指向的元素和基准元素作比较，如果大于或等于pivot，则指针向左移动；如果小于pivot，则right指针停止移动，切换到left指针。轮到left指针行动，让指针所指向的元素和基准元素作比较，如果小于或等于pivot。则指针向右移动；如果大于pivot。则left指针停止移动。这时让left和right指针所指向的元素进行交换。然后进入第2次循环，重新切换到right指针......
 ```
-void quick_sort(int num[], int start_index, int end_index) {
-    <!-- 递归结束条件：start_index大于或等于end_index时 -->
-    if(start_index >= end_index) {
-        return;
-    }
-
-    <!-- 得到基准元素位置 -->
-    int pivot_index = partition(num, start_index, end_index);
-
-    <!-- 根据基准元素，分成两部分进行递归排序 -->
-    quick_sort(num, start_index, pivot_index - 1);
-    quick_sort(num, pivot_index + 1, end_index);
-}
-void partition(int num[], int start_index, end_index) {
+void partition(int num[], int start_index, int end_index) {
     <!-- 取第1个位置（也可以选择随机位置）的元素作为基准元素 -->
     int pivot = num[start_index];
     int left = start_index;
@@ -151,7 +138,7 @@ void partition(int num[], int start_index, end_index) {
         
         <!-- 控制left指针进行比较并右移 -->
         while(left < right && num[right] <= pivot)
-            left++:
+            left++;
         
         <!-- 交换left和right指针所指向的元素 -->
         if(left < right) {
@@ -166,6 +153,19 @@ void partition(int num[], int start_index, end_index) {
     num[left] = pivot;
 
     return left;
+}
+void quick_sort(int num[], int start_index, int end_index) {
+    <!-- 递归结束条件：start_index大于或等于end_index时 -->
+    if(start_index >= end_index) {
+        return;
+    }
+
+    <!-- 得到基准元素位置 -->
+    int pivot_index = partition(num, start_index, end_index);
+
+    <!-- 根据基准元素，分成两部分进行递归排序 -->
+    quick_sort(num, start_index, pivot_index - 1);
+    quick_sort(num, pivot_index + 1, end_index);
 }
 ```
 2. 单边循环法
