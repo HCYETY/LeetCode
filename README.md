@@ -92,6 +92,7 @@ void shell_sort(int num[]) {
 - 最好：O(n)，只需要冒泡一次数组就有序了。
 - 最坏：O(n²)
 - 平均：O(n²)
+1.冒泡优化
 ```
 void bubble_sort(int num[]) {
     int n = num.size();
@@ -113,6 +114,48 @@ void bubble_sort(int num[]) {
 
         <!-- 2.如果全程无交换，则跳出循环 -->
         if(flag == false)
+            break;
+    }
+}
+```
+2.鸡尾酒排序
+- 使用场景：大部分元素已经有序的情况
+- 优点：能够在特定条件下，减少排序的回合数
+- 缺点：代码量比冒泡多了一倍
+```
+void cocktail_sort(int arr[]) {
+    int tmp = 0;
+    for(int i = 0; i < arr.size() / 2; i++) {
+
+        <!-- 有序标记，每一轮的初始值都是true -->
+        bool isSorted = true;
+        <!-- 奇数轮，从左向右比较和交换 -->
+        for(int j = i; j < arr.size() - i - 1; j++) {
+            if(arr[j] > arr[j+1]) {
+                tmp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = tmp;
+
+                <!-- 有元素交换，所以不是有序的，标记为false -->
+                isSorted = false;
+            }
+        }
+
+        <!-- 将isSorted重新标记为true -->
+        isSorted = true;
+        <!-- 偶数轮，从右向左比较和交换 -->
+        for(int j = arr.size() - i - 1; j > i; j--) {
+            if(arr[j] < arr[j-1]) {
+                tmp = arr[j];
+                arr[j] = arr[j-1];
+                arr[j-1] = tmp;
+
+                <!-- 有元素交换，所以不是有序的，标记为false -->
+                isSorted = false;
+            }
+        }
+
+        if(isSorted)
             break;
     }
 }
@@ -206,7 +249,7 @@ void partition(int num[], int start_index, int end_index) {
 ```
 - 非递归实现：(待完善)
 ```
-void quick_sort(int num[], int start_index, end_index) {
+void quick_sort(int num[], int start_index, int end_index) {
     <!-- 用一个集合栈来代替递归的函数栈 -->
     Stack<>
 }
