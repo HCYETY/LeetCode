@@ -236,41 +236,77 @@ void merge_sort(int arr[], int left, int right) {
 	}
 }
 
+// 计数排序
+void count_sort(int arr[])
+{
+    int len = sizeof(arr)/sizeof(int);
+	int max = arr[0], min = arr[0];
+	for(int i = 0; i < len; i++) {
+		if(arr[i] > max) {
+			max = arr[i];
+		}
+		if(arr[i] < min) {
+			min = arr[i];
+		}
+	}
+
+	int bucket[max-min+1];
+	memset(bucket, 0, sizeof(bucket));
+	for(int i = 0; i < len; i++) {
+		bucket[arr[i]-min]++;
+	}
+
+    int index = 0;
+	for(int i = 0; i < max - min + 1; i++) {
+		for(int j = 0; j < bucket[i]; j++) {
+			arr[index++] = min + i;
+		}
+	}
+}
+
 // 桶排序
-void bucketSort(int arr[]) {
-  // 桶的个数
-  int num = 5;
-  int _max = (*max_element(arr, arr+len));
-  int _min = (*min_element(arr, arr+len));
-  // 计算每个桶存放的数值范围，至少为1，
-  int range = (_max - _min) / num;
-  if(range < 1)  range = 1;
-  // 创建二维数组，第一维表示第几个桶，第二维表示该桶里存放的数
-  int res[100][1000];
-  // 表示每个桶里元素的个数，因为c++不能直接获取到int数组的长度...
-  int bucketSum[num];
-  memset(bucketSum, 0, sizeof(bucketSum));
-  for(int i=0; i<len; i++) {
-    // 计算元素应该分布在哪个桶
-    int index = floor((arr[i] - _min) / range);
-    // 防止index越界，例如当[5,1,1,2,0,0]时index会出现5
-    if(index >= num)  index = num - 1;
-    // 插入排序，将元素有序插入到桶中
-    int j = bucketSum[index] - 1;
-    while(j >= 0 && arr[i] < res[index][j]) {
-      res[index][j+1] = res[index][j];
-      j--;
+void bucket_sort(int arr[]) {
+    int len = sizeof(arr)/sizeof(int);
+    int max = arr[0], min = arr[0];
+    for(int i = 0; i < len; i++) {
+        if(arr[i] > max)
+            max = arr[i];
+        if(arr[i] < min)
+            min = arr[i];
     }
-    res[index][j+1] = arr[i];
-    bucketSum[index]++;
-  }
-  // 修改回原数组
-  int t = 0;
-  for(int i=0; i<num; i++) {
-    for(int j=0; j<bucketSum[i]; j++) {
-      arr[t++] = res[i][j];
+    // 设置5个桶，计算每个桶存放的数值范围，至少为1
+    int num = 5;
+    int range = (max - min) / num;
+    if(range < 1)  range = 1;
+    // 创建二维数组，第一维表示第几个桶，第二维表示该桶里存放的数
+    int bucket[num][100];
+    // 表示每个桶里元素的个数
+    int bucketSum[num];
+    memset(bucketSum, 0, sizeof(bucketSum));
+
+    for(int i = 0; i < len; i++) {
+        // 计算元素应该分布在哪个桶
+        int index = (arr[i] - min) / range;
+        // 防止index越界，例如当[5,1,1,2,0,0]时index会出现5
+        if(index >= num)  index = num - 1;
+
+        // 插入排序，将元素有序插入到桶中
+        int j = bucketSum[index] - 1;
+        while(j >= 0 && arr[i] < bucket[index][j]) {
+            bucket[index][j+1] = bucket[index][j];
+            j--;
+        }
+        bucket[index][j+1] = arr[i];
+        bucketSum[index]++;
     }
-  }
+
+    // 修改回原数组
+    int t = 0;
+    for(int i = 0; i < num; i++) {
+        for(int j=0; j<bucketSum[i]; j++) {
+            arr[t++] = bucket[i][j];
+        }
+    }
 }
 
 // 基数排序
@@ -304,47 +340,6 @@ void radixSort(int arr[]) {
     }
     memset(bucketSum, 0, sizeof(bucketSum));
     div *= 10;
-  }
-}
-
-// 计数排序
-void countingSort(int arr[]) {
-  int res[10000];
-  memset(res, 0, sizeof(res));
-  int _max = (*max_element(arr, arr+len));
-  int _min = (*min_element(arr, arr+len));
-  for(int i=0; i<len; i++) {
-    res[arr[i]]++;
-  }
-  int index = 0;
-  for(int i=_min; i<=_max; i++) {
-    while(res[i] > 0) {
-      arr[index++] = i;
-      res[i]--;
-    }
-  }
-}
-
-// 计数排序优化
-void countingSort1(int arr[]) {
-  int res[10000];
-  memset(res, 0, sizeof(res));
-  int _max = (*max_element(arr, arr+len));
-  int _min = (*min_element(arr, arr+len));
-  // 加上最小值的相反数来缩小数组范围
-  int add = -_min;
-  for(int i=0; i<len; i++) {
-    int temp = arr[i];
-    temp += add;
-    res[temp]++;
-  }
-  int index = 0;
-  for(int i=_min; i<=_max; i++) {
-    int temp = res[i+add];
-    while(temp > 0) {
-      arr[index++] = i;
-      temp--;
-    }
   }
 }
 
@@ -390,24 +385,23 @@ void heapSort(int arr[]) {
 }
 
 // 希尔排序
-void shellSort(int arr[]) {
-  // 初始步数
-  int gap = floor(len / 2);
-  while(gap) {
-    // 从第gap个元素开始遍历
-    for(int i=gap; i<len; i++) {
-      // 逐步其和前面其他的组成员进行比较和交换
-      for(int j=i-gap; j>=0; j-=gap) {
-        if(arr[j] > arr[j+gap]) {
-          swap(arr[j], arr[j+gap]);
+void shell_sort(int arr[]) {
+    int len = sizeof(arr) / sizeof(int);
+    int gap = len / 2;
+    while(gap) {
+        for(int i = gap; i < len; i++) {
+            for(int j = i - gap; j >= 0; j -= gap) {
+                if(arr[j] > arr[j+gap]) {
+                    int tmp = arr[j];
+                    arr[j] = arr[j+gap];
+                    arr[j+gap] = tmp;
+                } else {
+                    break;
+                }
+            }
         }
-        else {
-          break;
-        }
-      }
+        gap = gap / 2;
     }
-    gap = floor(gap / 2);
-  }
 }
 
 int main() {
@@ -451,16 +445,16 @@ int main() {
     merge_sort(arr, 0, len-1);
     print(arr);
 
+	 cout<<"计数排序"<<endl;
+    count_sort(arr);
+    print(arr);
+    
     cout<<"桶排序"<<endl;
-    bucketSort(arr);
+    bucket_sort(arr);
     print(arr);
 
     cout<<"基数排序"<<endl;
     radixSort(arr);
-    print(arr);
-
-    cout<<"计数排序"<<endl;
-    countingSort(arr);
     print(arr);
 
     cout<<"堆排序"<<endl;
@@ -468,7 +462,7 @@ int main() {
     print(arr);
 
     cout<<"希尔排序"<<endl;
-    shellSort(arr);
+    shell_sort(arr);
     print(arr);
   }
 }
