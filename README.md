@@ -1,29 +1,46 @@
 # 算法集合圈
 ## 十大排序
+### 交换排序
+**最基本的排序方法，采用双重循环，每一次符合判断条件后都要进行交换**
+- 最好：O(n2)
+- 最坏：O(n2)
+- 平均：O(n2)
+```
+void swap_sort(int arr[]) {
+    for(int i = 0; i < len; i++) {
+        for(int j = i + 1; j < len; j++) {
+            if(arr[i] > arr[j]) {
+                swap(arr[i], arr[j]);
+            }
+        }
+    }
+}
+```
 ### 选择排序
-- 在未排序的序列中选出最小的元素和序列的首尾元素交换，接下来在剩下的未排序序列中再选出最小元素与序列的第二位元素交换，以此类推，最后形成从小到大的已排序序列。
+**在未排序的序列中选出最小的元素和序列的首位元素交换，接下来在剩下的未排序序列中再选出最小元素与序列的第二位元素交换，以此类推，最后形成从小到大的已排序序列。**
+- 与交换排序不同的是，选择排序不会一直交换，而是第二次for循环到选出最小元素后才会进行交换
 - 最好：O(n²)
 - 最坏：O(n²)
 - 平均：O(n²)
 ```
 void selection_sort(int num[]) {
-    int n = num.size();
+    int len = sizeof(num) / sizeof(int);
 
-    <!-- 依次处理区间[0, n-1], [1, n-1], ...... -->
-    for(int i = 0; i < n - 1; i++) {
+    <!-- 依次处理区间[0, len-1], [1, len-1], ...... -->
+    for(int i = 0; i < len - 1; i++) {
 
-        <!-- 在区间[i, n-1]内选出最小元素，交换到区间头部 -->
+        <!-- 在区间[i, len-1]内选出最小元素，交换到区间头部 -->
         int min_index = i;
 
-        <!-- 1.在区间[i, n-1]内选出最小元素的位置min_index -->
-        for(int j = i + 1; j < n; j++)
+        <!-- 1.在区间[i, len-1]内选出最小元素的位置min_index -->
+        for(int j = i + 1; j < len; j++)
             if(num[j] < num[min_index])
                 min_index = j;
 
         <!-- 2.把最小元素交换到区间头部 -->
-        int temp = num[i];
+        int tmp = num[i];
         num[i] = num[min_index];
-        num[min_index] = temp;
+        num[min_index] = tmp;
     }
 }
 ```
@@ -35,24 +52,23 @@ void selection_sort(int num[]) {
     - 平均：O(n²)
 ```
 void insert_sort(int num[]) {
-    int n = num.size();
+    int n = sizeof(num) / sizeof(int);
 
     <!-- 依次处理第2， 3， ..., len个元素 -->
-    for(int insert_index = 1; insert_index < n; insert_index++) {
-        <!-- 把num[p]插入到左边p个元素内 -->
+    for(int i = 1; i < n; i++) {
+        <!-- 把num[i]插入到左边i个元素内 -->
 
-        <!-- 1.移走num[p]，用tmp记住它 -->
-        int temp = num[insert_index];
+        <!-- 1.移走num[i]，用tmp记住它 -->
+        int tmp = num[i];
         
-        <!-- 2.从右向左的，把区间[0, p-1]内大于tmp的元素右移一格 -->
-        int i = insert_index;
-        while(i > 0 && num[i-1] > temp) {
-            num[i] = num[i-1];
-            i--;
+        <!-- 2.从右向左的，把区间[0, i-1]内大于tmp的元素右移一格 -->
+        int j = i;
+        while(j > 0 && num[j-1] > tmp) {
+            num[j--] = num[j-1];
         }
 
         <!-- 3.把tmp填入空出来的位置 -->
-        num[i] = temp;
+        num[j] = tmp;
     }
 }
 ```
@@ -63,7 +79,7 @@ void insert_sort(int num[]) {
     - 平均：O(n * logn)
 ```
 void shell_sort(int num[]) {
-    int n = num.size();
+    int n = sizeof(num) / sizeof(int);
 
     <!-- 初始步数 -->
     int gap = len / 2;
@@ -92,10 +108,10 @@ void shell_sort(int num[]) {
 - 最好：O(n)，只需要冒泡一次数组就有序了。
 - 最坏：O(n²)
 - 平均：O(n²)
-1.冒泡优化
+1. 冒泡优化第一版
 ```
 void bubble_sort(int num[]) {
-    int n = num.size();
+    int n = sizeof(num) / sizeof(int);
 
     <!-- 依次处理区间[0, n-1], [0, n-2], [0, len-3], ... -->
     for(int p = n - 1; p > 0; p--) {
@@ -118,7 +134,41 @@ void bubble_sort(int num[]) {
     }
 }
 ```
-2.鸡尾酒排序
+2. 冒泡优化第二版
+```
+void bubble_sort(int num[]) {
+    int len = sizeof(num) / sizeof(int);
+
+    <!-- 记录最后一次交换的位置 -->
+    int lastExchange_index = 0;
+    <!-- 无序数列的边界，每次比较字需要比到这里为止 -->
+    int sortBorder = len - 1;
+    
+    for(int i = 0; i < len - 1; i++) {
+        <!-- 有序标记，每一轮的初始值都是true -->
+        bool flag = false;
+
+        for(int j = 0; j < sortBorder; j++) {
+            int tmp = 0;
+            if(num[j] > num[j+1]) {
+                int tmp = num[j];
+                num[j] = num[j+1];
+                num[j+1] = tmp;
+
+                <!-- 因为有元素进行交换，所以不是有序的，标记为false -->
+                flag = true;
+                <!-- 更新为最后一次交换元素的位置 -->
+                lastExchange_index = j;
+            }
+        }
+
+        sortBorder = lastExchange_index;
+        if(flag == false)
+            break;
+    }
+}
+```
+3.鸡尾酒排序
 - 使用场景：大部分元素已经有序的情况
 - 优点：能够在特定条件下，减少排序的回合数
 - 缺点：代码量比冒泡多了一倍
@@ -166,9 +216,9 @@ void cocktail_sort(int arr[]) {
 - 最坏：O(n²) ，所有数都分布在基数的一边，此时划分左右序列就相当于是插入排序。
 - 平均：O(n * logn)
 1. 双边循环法
-- 实现思想：采用左右双指针，第一次循环从right指针开始，让指针所指向的元素和基准元素作比较，如果大于或等于pivot，则指针向左移动；如果小于pivot，则right指针停止移动，切换到left指针。轮到left指针行动，让指针所指向的元素和基准元素作比较，如果小于或等于pivot。则指针向右移动；如果大于pivot。则left指针停止移动。这时让left和right指针所指向的元素进行交换。然后进入第2次循环，重新切换到right指针......
+- 采用左右双指针，第一次循环从right指针开始，让指针所指向的元素和基准元素作比较，如果大于或等于pivot，则指针向左移动；如果小于pivot，则right指针停止移动，切换到left指针。轮到left指针行动，让指针所指向的元素和基准元素作比较，如果小于或等于pivot。则指针向右移动；如果大于pivot。则left指针停止移动。这时让left和right指针所指向的元素进行交换。然后进入第2次循环，重新切换到right指针......
 ```
-void partition(int num[], int start_index, int end_index) {
+int partition(int num[], int start_index, int end_index) {
     <!-- 取第1个位置（也可以选择随机位置）的元素作为基准元素 -->
     int pivot = num[start_index];
     int left = start_index;
@@ -215,20 +265,7 @@ void quick_sort(int num[], int start_index, int end_index) {
 - 首先选定基准元素pivot。同时设置一个mark指针指向数列起始位置（这个mark指针代表小于基准元素的区域边界）。接下来，从基准元素的下一个位置开始遍历数组，如果遍历到的元素大于基准元素，就继续往后遍历；如果遍历到的元素小于基准元素，则需要做两件事：①把mark指针右移1位（因为小于pivot的区域边界增大二楼1）；②让最新遍历到的元素和mark指针所在位置的元素交换位置（因为最新遍历的元素归属于小于pivot的区域）。
 - 递归实现：
 ```
-void quick_sort(int num[], int start_index, int end_index) {
-    <!-- 递归结束条件：start_index大于或等于end_index时 -->
-    if(start_index >= end_index) {
-        return;
-    }
-
-    <!-- 得到基准元素位置 -->
-    int pivot_index = partition(num, start_index, end_index);
-
-    <!-- 根据基准元素，分成两部分进行递归排序 -->
-    quick_sort(num, start_index, pivot_index - 1);
-    quick_sort(num, pivot_index + 1, end_index);
-}
-void partition(int num[], int start_index, int end_index) {
+int partition(int num[], int start_index, int end_index) {
     <!-- 取第1个位置（也可以选择随机位置）的元素作为基准元素 -->
     int pivot = num[start_index];
     int mark = start_index;
@@ -245,6 +282,19 @@ void partition(int num[], int start_index, int end_index) {
     num[start_index] = num[mark];
     num[mark] = pivot;
     return mark;
+}
+void quick_sort(int num[], int start_index, int end_index) {
+    <!-- 递归结束条件：start_index大于或等于end_index时 -->
+    if(start_index >= end_index) {
+        return;
+    }
+
+    <!-- 得到基准元素位置 -->
+    int pivot_index = partition(num, start_index, end_index);
+
+    <!-- 根据基准元素，分成两部分进行递归排序 -->
+    quick_sort(num, start_index, pivot_index - 1);
+    quick_sort(num, pivot_index + 1, end_index);
 }
 ```
 - 非递归实现：(待完善)
@@ -311,6 +361,11 @@ void merge_sort(int num[], int left, int right) {
         }
     }
 }
+```
+### 堆排序
+- ①把无序数组构建成二叉堆。需要从小到大排序，则构建成最大堆；需要从大到小，则构建成最小堆。②循环删除堆顶元素，替换到二叉堆的末尾，调整堆产生新的堆顶。
+```
+
 ```
 ### 桶排序(over)
 - ①创建桶，并确定每一个桶的区间范围【（最大值 - 最小值） / （桶的数量 - 1）】；②遍历原始数列，把元素对号入座放入各个桶中；③对每个桶内部的元素分别进行排序；④遍历所有的桶，输出所有元素。
