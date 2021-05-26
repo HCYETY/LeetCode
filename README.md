@@ -82,28 +82,27 @@ void insert_sort(int num[]) {
     - 最坏：O(n * logn)
     - 平均：O(n * logn)
 ```
-void shell_sort(int num[]) {
-    int n = sizeof(num) / sizeof(int);
-
+void shell_sort(int arr[]) {
+    int len = sizeof(arr) / sizeof(int);
     <!-- 初始步数 -->
     int gap = len / 2;
 
     <!-- 逐渐缩小步数 -->
     while(gap) {
-
         <!-- 从第gap个元素开始遍历 -->
         for(int i = gap; i < len; i++) {
-
             <!-- 逐步其和前面其他的组成员进行比较和交换 -->
             for(int j = i - gap; j >= 0; j -= gap) {
-                if(nums[j] > nums[j+gap]) {
-                    [nums[j], nums[j+gap]] = [nums[j+gap], nums[j]];
+                if(arr[j] > arr[j+gap]) {
+                    int tmp = arr[j];
+                    arr[j] = arr[j+gap];
+                    arr[j+gap] = tmp;
                 } else {
                     break;
                 }
             }
         }
-        gap = parseInt(gap / 2);
+        gap = gap / 2;
     }
 }
 ```
@@ -371,7 +370,12 @@ void merge_sort(int num[], int left, int right) {
 ### 堆排序
 - ①把无序数组构建成二叉堆。需要从小到大排序，则构建成最大堆；需要从大到小，则构建成最小堆。②循环删除堆顶元素，替换到二叉堆的末尾，调整堆产生新的堆顶。
 ```
+void downAdjust(int arr[], int parent_index, int length) {
 
+}
+void heap_sort(int arr[]) {
+    for(int i = 0; )
+}
 ```
 ### 计数排序
 **①新建一个数组，长度为无序数组的 最大值-最小值+1 ，全部值为0；②以无序数组的最小值作为一个偏移量，用来计算整数在计数数组中的下标：遍历无序数组，得到每一个元素，减去偏移量后得到一个值，在计数数组中对应该值的下标的元素+1；③遍历完无序数组后，计数数组中每一个下标位置+偏移量的值代表无序数列中对应整数出现的次数；④有了这个统计结果后，排序就很简单了。直接遍历计数数组，输出该数组元素的下标值（这里已经将无序数组的元素从小到大排序好了，因为下标正是从小到大的），元素的值是几，就输出几次（无序数组中有重复的元素就可以随之输出）。**
@@ -408,6 +412,9 @@ void count_sort(int arr[])
 ```
 ### 桶排序(over)
 **①创建桶，并确定每一个桶的区间范围【（最大值 - 最小值） / 桶的数量 】；②遍历原始数列，计算每个元素应该放在哪个桶，将元素插入排序到对应桶内；③遍历所有的桶，输出所有元素。**
+- 最好：O(n)，每个数都在分布在一个桶里，这样就可以省略将数插入排序到桶里的时间(类似于计数排序以空间换时间)。
+- 最坏：O(n²)，所有的数都分布在一个桶里
+- 平均：O(n + k)，k表示桶的个数
 ```
 void bucket_sort(int arr[]) {
     int len = sizeof(arr)/sizeof(int);
