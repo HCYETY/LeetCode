@@ -60,7 +60,6 @@ class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
     	  if (root == NULL) return result;
-    	  
         stack<TreeNode*> st;
         vector<int> result;
         st.push(root);                              // 先将根节点压进栈
