@@ -96,6 +96,7 @@ void cocktail_sort(int arr[]) {
 
                 isSorted = false;
             }
+//        	print(arr);
         }
 
         isSorted = true;
@@ -409,60 +410,60 @@ int main() {
     createArray(arr);
     cout<<endl;
 
-    cout<<"Ã°ÅÝÅÅÐòµÚÒ»°æ"<<endl;
-    bubble_sort1(arr);
-    print(arr);
-    
-    cout<<"Ã°ÅÝÅÅÐòµÚ¶þ°æ"<<endl;
-    bubble_sort2(arr);
-    print(arr);
-
+//    cout<<"Ã°ÅÝÅÅÐòµÚÒ»°æ"<<endl;
+//    bubble_sort1(arr);
+//    print(arr);
+//    
+//    cout<<"Ã°ÅÝÅÅÐòµÚ¶þ°æ"<<endl;
+//    bubble_sort2(arr);
+//    print(arr);
+//
 	 cout<<"Ã°ÅÝÓÅ»¯Ö®¼¦Î²¾ÆÅÅÐò"<<endl;
     cocktail_sort(arr);
     print(arr);
-
-	 cout<<"½»»»ÅÅÐò"<<endl;
-    swap_sort(arr);
-    print(arr);
-
-    cout<<"Ñ¡ÔñÅÅÐò"<<endl;
-    selection_sort(arr);
-    print(arr);
-
-    cout<<"²åÈëÅÅÐò"<<endl;
-    insert_sort(arr);
-    print(arr);
-
-    cout<<"¿ìËÙÅÅÐòÖ®µ¥±ßÑ­»··¨"<<endl;
-    quick_sort1(arr, 0, len-1);
-    print(arr);
-    
-    cout<<"¿ìËÙÅÅÐòÖ®Ë«±ßÑ­»··¨"<<endl;
-    quick_sort2(arr, 0, len-1);
-    print(arr);
-
-    cout<<"¹é²¢ÅÅÐò"<<endl;
-    merge_sort(arr, 0, len-1);
-    print(arr);
-
-	 cout<<"¼ÆÊýÅÅÐò"<<endl;
-    count_sort(arr);
-    print(arr);
-    
-    cout<<"Í°ÅÅÐò"<<endl;
-    bucket_sort(arr);
-    print(arr);
-
-    cout<<"»ùÊýÅÅÐò"<<endl;
-    radixSort(arr);
-    print(arr);
-
-    cout<<"¶ÑÅÅÐò"<<endl;
-    heapSort(arr);
-    print(arr);
-
-    cout<<"Ï£¶ûÅÅÐò"<<endl;
-    shell_sort(arr);
-    print(arr);
+//
+//	 cout<<"½»»»ÅÅÐò"<<endl;
+//    swap_sort(arr);
+//    print(arr);
+//
+//    cout<<"Ñ¡ÔñÅÅÐò"<<endl;
+//    selection_sort(arr);
+//    print(arr);
+//
+//    cout<<"²åÈëÅÅÐò"<<endl;
+//    insert_sort(arr);
+//    print(arr);
+//
+//    cout<<"¿ìËÙÅÅÐòÖ®µ¥±ßÑ­»··¨"<<endl;
+//    quick_sort1(arr, 0, len-1);
+//    print(arr);
+//    
+//    cout<<"¿ìËÙÅÅÐòÖ®Ë«±ßÑ­»··¨"<<endl;
+//    quick_sort2(arr, 0, len-1);
+//    print(arr);
+//
+//    cout<<"¹é²¢ÅÅÐò"<<endl;
+//    merge_sort(arr, 0, len-1);
+//    print(arr);
+//
+//	 cout<<"¼ÆÊýÅÅÐò"<<endl;
+//    count_sort(arr);
+//    print(arr);
+//    
+//    cout<<"Í°ÅÅÐò"<<endl;
+//    bucket_sort(arr);
+//    print(arr);
+//
+//    cout<<"»ùÊýÅÅÐò"<<endl;
+//    radixSort(arr);
+//    print(arr);
+//
+//    cout<<"¶ÑÅÅÐò"<<endl;
+//    heapSort(arr);
+//    print(arr);
+//
+//    cout<<"Ï£¶ûÅÅÐò"<<endl;
+//    shell_sort(arr);
+//    print(arr);
   }
 }

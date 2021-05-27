@@ -2,9 +2,9 @@
 ## 十大排序
 ### 交换排序
 **最基本的排序方法，采用双重循环，每一次符合判断条件后都要进行交换**
-- 最好：O(n2)
-- 最坏：O(n2)
-- 平均：O(n2)
+- 最好：O(n²)
+- 最坏：O(n²)
+- 平均：O(n²)
 ```
 void swap_sort(int arr[]) {
     for(int i = 0; i < len; i++) {
@@ -81,6 +81,7 @@ void insert_sort(int num[]) {
     - 最好：O(n * logn)，步长不断二分。
     - 最坏：O(n * logn)
     - 平均：O(n * logn)
+> 参考学习资料:[图解排序算法(二)之希尔排序](https://www.cnblogs.com/chengxiao/p/6104371.html)
 ```
 void shell_sort(int arr[]) {
     int len = sizeof(arr) / sizeof(int);
@@ -172,9 +173,20 @@ void bubble_sort(int num[]) {
 }
 ```
 3.冒泡优化之鸡尾酒排序
+
+**鸡尾酒排序是冒泡排序的一种改进和变型 ，又称“双向冒泡排序”，鸡尾酒排序是从低到高然后从高到低来回排序（选出最大和最小项），比冒泡排序的效率稍微好一点，原因是冒泡排序只从一个方向进行比对(由低到高)，每次循环只移动一个项目。**
+
 - 使用场景：大部分元素已经有序的情况
 - 优点：能够在特定条件下，减少排序的回合数
 - 缺点：代码量比冒泡多了一倍
+- 最好：O(n)，顺序排列时
+- 最差：O(n²)，逆序排序时
+- 平均：O(n²)，当原始序列杂乱无序时
+> 参考学习资料：[排序算法之鸡尾酒排序](https://blog.csdn.net/zhizhengguan/article/details/106906563)
+
+> [排序算法系列之鸡尾酒排序](https://blog.csdn.net/hlc246/article/details/81064951)
+
+> [（8）鸡尾酒排序 (Cocktail Sort/Shaker Sort)](https://www.w3cschool.cn/wqcota/ts3klozt.html)
 ```
 void cocktail_sort(int arr[]) {
     int tmp = 0;
@@ -368,7 +380,10 @@ void merge_sort(int num[], int left, int right) {
 }
 ```
 ### 堆排序
-- ①把无序数组构建成二叉堆。需要从小到大排序，则构建成最大堆；需要从大到小，则构建成最小堆。②循环删除堆顶元素，替换到二叉堆的末尾，调整堆产生新的堆顶。
+- 将待排序序列构造成一个大顶堆，此时，整个序列的最大值就是堆顶的根节点。将其与末尾元素进行交换，此时末尾就为最大值。然后将剩余n-1个元素重新构造成一个堆，这样会得到n个元素的次小值。如此反复执行，便能得到一个有序序列了。
+    - 构造初始堆。将给定无序序列构造成一个大顶堆（一般升序采用大顶堆，降序采用小顶堆)。
+    - 将堆顶元素与末尾元素进行交换，使末尾元素最大。然后继续调整堆，再将堆顶元素与末尾元素交换，得到第二大元素。如此反复进行交换、重建、交换。
+> [图解排序算法(三)之堆排序](https://www.cnblogs.com/chengxiao/p/6129630.html)
 ```
 void downAdjust(int arr[], int parent_index, int length) {
 
@@ -461,4 +476,16 @@ void bucket_sort(int arr[]) {
 }
 ```
 ### 基数排序
-- 
+- ①找出无序数组的最大值，求出位数x，这就决定要分x次桶。（如果是数字，就分10个桶；如果是大小写字母，就分52个桶）。
+- ②先按最低位数找元素，并放进对应桶（该位数是n，就放进n号桶），全部元素进对应桶之后，按小桶先出、大桶后出；然后按下一个位数找位数，进桶...
+- ③分x次桶之后，全部元素出桶，就已经按从小到大排序好了。
+```
+void radix_sort(int arr[]) {
+    <!-- int max = *max_element(arr, arr.end()); -->
+    int max_index = 0;
+    while(max_index) {
+        max_index++;
+        max /= 10;
+    }
+}
+```
