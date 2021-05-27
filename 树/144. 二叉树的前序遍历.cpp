@@ -62,13 +62,13 @@ public:
     	  if (root == NULL) return result;
         stack<TreeNode*> st;
         vector<int> result;
-        st.push(root);                              // 先将根节点压进栈
+        st.push(root);                               // 先将根节点压进栈
         while (!st.empty()) {
-            TreeNode* node = st.top();              // 得到根节点 或是 有孩子的父节点
+            TreeNode* node = st.top();               // 得到根节点 或是 有孩子的父节点
             st.pop();
             result.push_back(node->val);
-            if (node->right) st.push(node->right);  // 如果有右孩子，则入栈（空节点不入栈）
-            if (node->left) st.push(node->left);    // 如果有左孩子，则入栈（空节点不入栈）
+            if (node->right) st.push(node->right);   // 如果有右孩子，则入栈（空节点不入栈）
+            if (node->left) st.push(node->left);     // 如果有左孩子，则入栈（空节点不入栈）
         }
         return result;
     }
