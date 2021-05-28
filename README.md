@@ -1,4 +1,28 @@
 # 算法集合圈
+## 栈
+### 单调队列
+**单调栈用途不太广泛，只处理一种典型的问题，叫做 Next Greater Element**
+
+Next Greater Number 的原始问题：给你一个数组，返回一个等长的数组，对应索引存储着下一个更大元素，如果没有更大的元素，就存 -1。
+
+例子：给你一个数组 [2,1,2,4,3]，你返回数组 [4,2,4,-1,-1]。
+```
+vector<int> nextGreaterElement(vector<int>& nums) {
+    vector<int> ans(nums.size()); // 存放答案的数组
+    stack<int> s;
+    for (int i = nums.size() - 1; i >= 0; i--) { // 倒着往栈里放
+        while (!s.empty() && s.top() <= nums[i]) { // 判定个子高矮
+            s.pop(); // 矮个起开，反正也被挡着了。。。
+        }
+        ans[i] = s.empty() ? -1 : s.top(); // 这个元素身后的第一个高个
+        s.push(nums[i]); // 进队，接受之后的身高判定吧！
+    }
+    return ans;
+}
+```
+> 学习资料转载自@labuladong的LeetCode题解：[单调栈解决 Next Greater Number 一类问题](https://leetcode-cn.com/problems/next-greater-element-i/solution/dan-diao-zhan-jie-jue-next-greater-number-yi-lei-w/)
+
+- [练习：LeetCode 496. 下一个更大元素 I](https://leetcode-cn.com/problems/next-greater-element-i/)
 ## 十大排序
 ### 交换排序
 **最基本的排序方法，采用双重循环，每一次符合判断条件后都要进行交换**
