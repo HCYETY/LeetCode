@@ -90,7 +90,8 @@ void insert_sort(int num[]) {
         <!-- 2.从右向左的，把区间[0, i-1]内大于tmp的元素右移一格 -->
         int j = i;
         while(j > 0 && num[j-1] > tmp) {
-            num[j--] = num[j-1];
+            num[j] = num[j-1];
+            j--;
         }
 
         <!-- 3.把tmp填入空出来的位置 -->
