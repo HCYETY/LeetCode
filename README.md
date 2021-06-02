@@ -1,4 +1,78 @@
 # 算法集合圈
+## 计数质数
+### 常规枚举
+暴力算法
+```
+int countPrimes(int n) {
+    int count = 0;
+    for(int i = 2; i < n; i++) {
+        bool sign = true;
+        for(int j = 2; j < i; j++) {
+            if(i % j == 0) {
+                sign = false;
+                break;
+            }
+        }
+        if(sign)
+            count++; ;
+    }
+    return count;
+}
+```
+暴力算法优化
+
+细究暴力计算的方法，我们可以发现，假如一个数为 9 ，那么其二分之一（4.5）后的数都可以不用进行计算，因为肯定是有余的 。事实上情况会比这更好一些：对正整数 n ，如果用 2 到 √n 之间(包含边界)的所有整数去除，均无法整除，则 n 为质数。
+
+并且，我们可以发现，一切非 2 偶数一定不可能为质数。所以，我们可以在此处进行另一步的优化。
+```
+int countPrimes(int n) {
+    if(n < 3)
+        return 0;;
+    //从3开始验算，所以初始值为1（2为质数）。
+    int count = 1;
+    for(int i = 3; i < n; i++) {
+        // 当某个数为 2 的 n 次方时（n为自然数），其 & (n - 1) 所得值将等价于取余运算所得值
+        // 如果 x = 2^n ，则 x & (n - 1) == x % n
+        if((i & 1) == 0)   // 等价于 if(i % 2 == 0)
+            continue;
+        bool sign = true;
+        //用 j * j <= i 代替 j <= √i 会更好。
+        //因为我们已经排除了所有偶数，所以每次循环加二将规避偶数会减少循环次数
+        for(int j = 3; j * j <= i; j += 2) {
+            if(i % j == 0) {
+                sign = false;
+                break;
+            }
+        }
+        if(sign)
+            count++;
+    }
+    return count;
+}
+```
+### 厄拉多塞筛法，简称埃氏筛
+对 1 到 64 的质数的筛选过程：从 2 开始遍历，把 2 的倍数都标记为 false（表示不是素数），再从 2 的下一位素数 3 （未被标记为false的元素）开始也同样标记其倍数。以此类推，最后仍为 true 的则为素数。
+- ①新建一个大小为 64 的数组，初始值标记为true。
+- ②从 2 开始遍历。如果布尔值为false，说明不为质数；如果为true，则为质数，计算质数数量的值+1。
+- ③如果 xx 是质数，那么大于 xx 的 xx 的倍数 2x，3x，… 一定不是质数，那么将当前值的所有倍数标记为false。继续循环找下一个质数（即布尔值为true的元素），继续标记非质数...
+```
+int countPrimes(int n) {
+    int count = 0;
+    //初始默认所有数为质数
+    vector<bool> sign(n, true);
+    for (int i = 2; i < n; i++) {
+        if (sign[i]) {
+            count++;
+            for (int j = i + i; j < n; j += i) {
+                //排除不是质数的数
+                sign[j] = false;
+            }
+        }
+    }
+    return count;
+}
+```
+---
 ## 栈
 ### 单调队列
 **单调栈用途不太广泛，只处理一种典型的问题，叫做 Next Greater Element**
@@ -23,6 +97,7 @@ vector<int> nextGreaterElement(vector<int>& nums) {
 > 学习资料转载自@labuladong的LeetCode题解：[单调栈解决 Next Greater Number 一类问题](https://leetcode-cn.com/problems/next-greater-element-i/solution/dan-diao-zhan-jie-jue-next-greater-number-yi-lei-w/)
 
 - [练习：LeetCode 496. 下一个更大元素 I](https://leetcode-cn.com/problems/next-greater-element-i/)
+---
 ## 十大排序
 ### 交换排序
 **最基本的排序方法，采用双重循环，每一次符合判断条件后都要进行交换**
