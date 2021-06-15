@@ -31,6 +31,7 @@ seatManager.unreserve(5); // 将座位 5 变为可以预约，现在可预约的座位为 [5] 。
 */
 
 
+//最小堆
 class SeatManager {
 public:
     priority_queue<int, vector<int>, greater<int>>myqueue;
