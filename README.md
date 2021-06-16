@@ -184,7 +184,7 @@ void insert_sort(int num[]) {
     - 最好：O(n * logn)，步长不断二分。
     - 最坏：O(n * logn)
     - 平均：O(n * logn)
-> 参考学习资料:[图解排序算法(二)之希尔排序](https://www.cnblogs.com/chengxiao/p/6104371.html)
+> 参考学习资料：[图解排序算法(二)之希尔排序](https://www.cnblogs.com/chengxiao/p/6104371.html)
 ```
 void shell_sort(int arr[]) {
     int len = sizeof(arr) / sizeof(int);
@@ -285,10 +285,8 @@ void bubble_sort(int num[]) {
 - 最好：O(n)，顺序排列时
 - 最差：O(n²)，逆序排序时
 - 平均：O(n²)，当原始序列杂乱无序时
-> 参考学习资料：[排序算法之鸡尾酒排序](https://blog.csdn.net/zhizhengguan/article/details/106906563)
-
-> [排序算法系列之鸡尾酒排序](https://blog.csdn.net/hlc246/article/details/81064951)
-
+> 参考学习资料：[排序算法之鸡尾酒排序](https://blog.csdn.net/zhizhengguan/article/details/106906563)   
+> [排序算法系列之鸡尾酒排序](https://blog.csdn.net/hlc246/article/details/81064951)   
 > [（8）鸡尾酒排序 (Cocktail Sort/Shaker Sort)](https://www.w3cschool.cn/wqcota/ts3klozt.html)
 ```
 void cocktail_sort(int arr[]) {
@@ -442,6 +440,50 @@ void partition(int num[], int start_index, int end_index) {
     return mark;
 }
 ```
+### 快速选择（待完善）
+其实快速选择法就是一种基于快速排序的选择方法，是一个典型的分治算法
+
+**我们知道快排的划分函数每次执行完后都能将数组分成两个部分，小于等于分界值 pivot 的元素的都会被放到数组的左边，大于的都会被放到数组的右边，然后返回分界值的下标。与快速排序不同的是，快速排序会根据分界值的下标递归处理划分的两侧，而这里我们只处理划分的一边。**
+
+- 分解： 将数组 a[left⋯right] 「划分」成两个子数组 a[left⋯q−1]、a[q+1⋯right]，使得 a[left⋯q−1] 中的每个元素小于等于 a[q]，且 a[q] 小于等于 a[q+1⋯right] 中的每个元素。其中，计算下标 q 也是「划分」过程的一部分。
+- 解决： 通过递归调用快速排序，对子数组 a[left⋯q−1] 和 a[q+1⋯right] 进行排序。
+- 合并： 因为子数组都是原址排序的，所以不需要进行合并操作，a[left⋯right] 已经有序。
+- 上文中提到的 「划分」 过程是：从子数组 a[left⋯right] 中选择任意一个元素 x 作为主元，调整子数组的元素使得左边的元素都小于等于它，右边的元素都大于等于它， x 的最终位置就是 q。
+```
+int quickSelect(vector<int>& a, int l, int r, int index) {
+        int q = randomPartition(a, l, r);
+        if (q == index) {
+            return a[q];
+        } else {
+            return q < index ? quickSelect(a, q + 1, r, index) : quickSelect(a, l, q - 1, index);
+        }
+    }
+
+    inline int randomPartition(vector<int>& a, int l, int r) {
+        int i = rand() % (r - l + 1) + l;
+        swap(a[i], a[r]);
+        return partition(a, l, r);
+    }
+
+    inline int partition(vector<int>& a, int l, int r) {
+        int x = a[r], i = l - 1;
+        for (int j = l; j < r; ++j) {
+            if (a[j] <= x) {
+                swap(a[++i], a[j]);
+            }
+        }
+        swap(a[i + 1], a[r]);
+        return i + 1;
+    }
+
+    int findKthLargest(vector<int>& nums, int k) {
+        srand(time(0));
+        return quickSelect(nums, 0, nums.size() - 1, nums.size() - k);
+    }
+```
+> [面试题 17.14. 最小K个数](https://leetcode-cn.com/problems/smallest-k-lcci/)（用快选重做一遍）   
+> [215. 数组中的第K个最大元素](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/)（用快选重做一遍）   
+> [LeetCode习题传送](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/solution/partitionfen-er-zhi-zhi-you-xian-dui-lie-java-dai-/)
 ### 归并排序
 **将大小为n的序列看成n个长度为1的子序列，接下来将相邻子序列两两进行归并操作，形成n/2（+1）个长度为2（或1）的有序子序列；然后再继续进行相邻子序列两两归并操作，循环直到剩下1个长度为n的序列。**
 - 最好：O(n * logn)
@@ -482,11 +524,12 @@ void merge_sort(int num[], int left, int right) {
     }
 }
 ```
-### 堆排序
+### 堆排序（待完善）
 - 将待排序序列构造成一个大顶堆，此时，整个序列的最大值就是堆顶的根节点。将其与末尾元素进行交换，此时末尾就为最大值。然后将剩余n-1个元素重新构造成一个堆，这样会得到n个元素的次小值。如此反复执行，便能得到一个有序序列了。
     - 构造初始堆。将给定无序序列构造成一个大顶堆（一般升序采用大顶堆，降序采用小顶堆)。
     - 将堆顶元素与末尾元素进行交换，使末尾元素最大。然后继续调整堆，再将堆顶元素与末尾元素交换，得到第二大元素。如此反复进行交换、重建、交换。
-> [图解排序算法(三)之堆排序](https://www.cnblogs.com/chengxiao/p/6129630.html)
+> [图解排序算法(三)之堆排序](https://www.cnblogs.com/chengxiao/p/6129630.html)   
+> [数据结构与算法：学习堆相关算法](https://blog.csdn.net/xiaolinnulidushu/article/details/104629479)
 ```
 void downAdjust(int arr[], int parent_index, int length) {
 
@@ -578,7 +621,7 @@ void bucket_sort(int arr[]) {
     }
 }
 ```
-### 基数排序
+### 基数排序（待完善）
 - ①找出无序数组的最大值，求出位数x，这就决定要分x次桶。（如果是数字，就分10个桶；如果是大小写字母，就分52个桶）。
 - ②先按最低位数找元素，并放进对应桶（该位数是n，就放进n号桶），全部元素进对应桶之后，按小桶先出、大桶后出；然后按下一个位数找位数，进桶...
 - ③分x次桶之后，全部元素出桶，就已经按从小到大排序好了。
