@@ -2,7 +2,7 @@
 ## 计数质数
 ### 常规枚举
 暴力算法
-```
+```c++
 int countPrimes(int n) {
     int count = 0;
     for(int i = 2; i < n; i++) {
@@ -24,7 +24,7 @@ int countPrimes(int n) {
 细究暴力计算的方法，我们可以发现，假如一个数为 9 ，那么其二分之一（4.5）后的数都可以不用进行计算，因为肯定是有余的 。事实上情况会比这更好一些：对正整数 n ，如果用 2 到 √n 之间(包含边界)的所有整数去除，均无法整除，则 n 为质数。
 
 并且，我们可以发现，一切非 2 偶数一定不可能为质数。所以，我们可以在此处进行另一步的优化。
-```
+```c++
 int countPrimes(int n) {
     if(n < 3)
         return 0;;
@@ -57,7 +57,7 @@ int countPrimes(int n) {
 - ①新建一个大小为 64 的数组，初始值标记为true。
 - ②从 2 开始遍历。如果布尔值为false，说明不为质数；如果为true，则为质数，计算质数数量的值+1。
 - ③如果 xx 是质数，那么大于 xx 的 xx 的倍数 2x，3x，… 一定不是质数，那么将当前值的所有倍数标记为false。继续循环找下一个质数（即布尔值为true的元素），继续标记非质数...
-```
+```c++
 int countPrimes(int n) {
     int count = 0;
     //初始默认所有数为质数
@@ -83,7 +83,7 @@ int countPrimes(int n) {
 Next Greater Number 的原始问题：给你一个数组，返回一个等长的数组，对应索引存储着下一个更大元素，如果没有更大的元素，就存 -1。
 
 例子：给你一个数组 [2,1,2,4,3]，你返回数组 [4,2,4,-1,-1]。
-```
+```c++
 vector<int> nextGreaterElement(vector<int>& nums) {
     vector<int> ans(nums.size()); // 存放答案的数组
     stack<int> s;
@@ -107,7 +107,7 @@ vector<int> nextGreaterElement(vector<int>& nums) {
 - 最好：O(n²)
 - 最坏：O(n²)
 - 平均：O(n²)
-```
+```c++
 void swap_sort(int arr[]) {
     for(int i = 0; i < len; i++) {
         for(int j = i + 1; j < len; j++) {
@@ -124,22 +124,19 @@ void swap_sort(int arr[]) {
 - 最好：O(n²)
 - 最坏：O(n²)
 - 平均：O(n²)
-```
+```c++
 void selection_sort(int num[]) {
     int len = sizeof(num) / sizeof(int);
 
-    <!-- 依次处理区间[0, len-1], [1, len-1], ...... -->
+    // 依次处理区间[0, len-1], [1, len-1], ...... 
     for(int i = 0; i < len - 1; i++) {
-
-        <!-- 在区间[i, len-1]内选出最小元素，交换到区间头部 -->
+        // 在区间[i, len-1]内选出最小元素，交换到区间头部 
         int min_index = i;
-
-        <!-- 1.在区间[i, len-1]内选出最小元素的位置min_index -->
+        // 1.在区间[i, len-1]内选出最小元素的位置min_index 
         for(int j = i + 1; j < len; j++)
             if(num[j] < num[min_index])
                 min_index = j;
-
-        <!-- 2.把最小元素交换到区间头部 -->
+        // 2.把最小元素交换到区间头部 
         int tmp = num[i];
         num[i] = num[min_index];
         num[min_index] = tmp;
@@ -154,25 +151,22 @@ void selection_sort(int num[]) {
     - 最好：O(n)，原数组已经是升序的。
     - 最坏：O(n²)
     - 平均：O(n²)
-```
+```c++
 void insert_sort(int num[]) {
     int n = sizeof(num) / sizeof(int);
 
-    <!-- 依次处理第2， 3， ..., len个元素 -->
+    // 依次处理第2， 3， ..., len个元素
     for(int i = 1; i < n; i++) {
-        <!-- 把num[i]插入到左边i个元素内 -->
-
-        <!-- 1.移走num[i]，用tmp记住它 -->
+        // 把num[i]插入到左边i个元素内
+        // 1.移走num[i]，用tmp记住它
         int tmp = num[i];
-        
-        <!-- 2.从右向左的，把区间[0, i-1]内大于tmp的元素右移一格 -->
+        // 2.从右向左的，把区间[0, i-1]内大于tmp的元素右移一格 
         int j = i;
         while(j > 0 && num[j-1] > tmp) {
             num[j] = num[j-1];
             j--;
         }
-
-        <!-- 3.把tmp填入空出来的位置 -->
+        // 3.把tmp填入空出来的位置
         num[j] = tmp;
     }
 }
@@ -185,17 +179,17 @@ void insert_sort(int num[]) {
     - 最坏：O(n * logn)
     - 平均：O(n * logn)
 > 参考学习资料：[图解排序算法(二)之希尔排序](https://www.cnblogs.com/chengxiao/p/6104371.html)
-```
+```c++
 void shell_sort(int arr[]) {
     int len = sizeof(arr) / sizeof(int);
-    <!-- 初始步数 -->
+    // 初始步数 
     int gap = len / 2;
 
-    <!-- 逐渐缩小步数 -->
+    // 逐渐缩小步数 
     while(gap) {
-        <!-- 从第gap个元素开始遍历 -->
+        从第gap个元素开始遍历 -->
         for(int i = gap; i < len; i++) {
-            <!-- 逐步其和前面其他的组成员进行比较和交换 -->
+            // 逐步其和前面其他的组成员进行比较和交换 
             for(int j = i - gap; j >= 0; j -= gap) {
                 if(arr[j] > arr[j+gap]) {
                     int tmp = arr[j];
@@ -216,16 +210,14 @@ void shell_sort(int arr[]) {
 - 最坏：O(n²)
 - 平均：O(n²)
 1. 冒泡优化第一版
-```
+```c++
 void bubble_sort(int num[]) {
     int n = sizeof(num) / sizeof(int);
-
-    <!-- 依次处理区间[0, n-1], [0, n-2], [0, len-3], ... -->
+    // 依次处理区间[0, n-1], [0, n-2], [0, len-3], ... 
     for(int p = n - 1; p > 0; p--) {
         bool flag = false;
-        <!-- 每一轮循环，把区间[0, p]内最大的元素交换到区间尾部 -->
-
-        <!-- 1.从左向右地，比较相邻的两个元素，如果大的在前，则交换 -->
+        // 每一轮循环，把区间[0, p]内最大的元素交换到区间尾部
+        // 1.从左向右地，比较相邻的两个元素，如果大的在前，则交换
         for(int i = 0; i < p; i++) {
             if(num[i] > num[i+1]) {
                 int temp = num[i];
@@ -234,25 +226,23 @@ void bubble_sort(int num[]) {
                 flag = true;
             }
         }
-
-        <!-- 2.如果全程无交换，则跳出循环 -->
+        // 2.如果全程无交换，则跳出循环
         if(flag == false)
             break;
     }
 }
 ```
 2. 冒泡优化第二版
-```
+```c++
 void bubble_sort(int num[]) {
     int len = sizeof(num) / sizeof(int);
-
-    <!-- 记录最后一次交换的位置 -->
+    // 记录最后一次交换的位置
     int lastExchange_index = 0;
-    <!-- 无序数列的边界，每次比较字需要比到这里为止 -->
+    // 无序数列的边界，每次比较字需要比到这里为止 
     int sortBorder = len - 1;
     
     for(int i = 0; i < len - 1; i++) {
-        <!-- 有序标记，每一轮的初始值都是true -->
+        // 有序标记，每一轮的初始值都是true 
         bool flag = false;
 
         for(int j = 0; j < sortBorder; j++) {
@@ -262,9 +252,9 @@ void bubble_sort(int num[]) {
                 num[j] = num[j+1];
                 num[j+1] = tmp;
 
-                <!-- 因为有元素进行交换，所以不是有序的，标记为false -->
+                // 因为有元素进行交换，所以不是有序的，标记为false 
                 flag = true;
-                <!-- 更新为最后一次交换元素的位置 -->
+                // 更新为最后一次交换元素的位置 
                 lastExchange_index = j;
             }
         }
@@ -288,35 +278,34 @@ void bubble_sort(int num[]) {
 > 参考学习资料：[排序算法之鸡尾酒排序](https://blog.csdn.net/zhizhengguan/article/details/106906563)   
 > [排序算法系列之鸡尾酒排序](https://blog.csdn.net/hlc246/article/details/81064951)   
 > [（8）鸡尾酒排序 (Cocktail Sort/Shaker Sort)](https://www.w3cschool.cn/wqcota/ts3klozt.html)
-```
+```c++
 void cocktail_sort(int arr[]) {
     int tmp = 0;
     for(int i = 0; i < arr.size() / 2; i++) {
-
-        <!-- 有序标记，每一轮的初始值都是true -->
+        //  有序标记，每一轮的初始值都是true 
         bool isSorted = true;
-        <!-- 奇数轮，从左向右比较和交换 -->
+        //  奇数轮，从左向右比较和交换 
         for(int j = i; j < arr.size() - i - 1; j++) {
             if(arr[j] > arr[j+1]) {
                 tmp = arr[j];
                 arr[j] = arr[j+1];
                 arr[j+1] = tmp;
 
-                <!-- 有元素交换，所以不是有序的，标记为false -->
+                // <!-- 有元素交换，所以不是有序的，标记为false 
                 isSorted = false;
             }
         }
 
-        <!-- 将isSorted重新标记为true -->
+        //  将isSorted重新标记为true 
         isSorted = true;
-        <!-- 偶数轮，从右向左比较和交换 -->
+        //  偶数轮，从右向左比较和交换 
         for(int j = arr.size() - i - 1; j > i; j--) {
             if(arr[j] < arr[j-1]) {
                 tmp = arr[j];
                 arr[j] = arr[j-1];
                 arr[j-1] = tmp;
 
-                <!-- 有元素交换，所以不是有序的，标记为false -->
+                // <有元素交换，所以不是有序的，标记为false 
                 isSorted = false;
             }
         }
@@ -333,24 +322,26 @@ void cocktail_sort(int arr[]) {
 - 平均：O(n * logn)
 1. 双边循环法
 
-**采用左右双指针，第一次循环从right指针开始，让指针所指向的元素和基准元素作比较，如果大于或等于pivot，则指针向左移动；如果小于pivot，则right指针停止移动，切换到left指针。轮到left指针行动，让指针所指向的元素和基准元素作比较，如果小于或等于pivot。则指针向右移动；如果大于pivot。则left指针停止移动。这时让left和right指针所指向的元素进行交换。然后进入第2次循环，重新切换到right指针......**
-```
+**采用左右双指针，第一次循环从right指针开始，让指针所指向的元素和基准元素作比较 -> 如果大于或等于pivot，则指针向左移动；如果小于pivot，则right指针停止移动，切换到left指针。**   
+**轮到left指针行动，让指针所指向的元素和基准元素作比较 -> 如果小于或等于pivot，则指针向右移动；如果大于pivot。则left指针停止移动。**   
+**这时让left和right指针所指向的元素进行交换。然后进入第2次循环，重新切换到right指针......**
+```c++
 int partition(int num[], int start_index, int end_index) {
-    <!-- 取第1个位置（也可以选择随机位置）的元素作为基准元素 -->
+    // 取第1个位置（也可以选择随机位置）的元素作为基准元素 
     int pivot = num[start_index];
     int left = start_index;
     int right = end_index;
 
     while(left != right) {
-        <!-- 控制right指针进行比较并左移 -->
+        // 控制right指针进行比较并左移 
         while(left < right && num[right] > pivot)
             right--;
         
-        <!-- 控制left指针进行比较并右移 -->
+        // 控制left指针进行比较并右移 
         while(left < right && num[right] <= pivot)
             left++;
         
-        <!-- 交换left和right指针所指向的元素 -->
+        // 交换left和right指针所指向的元素 
         if(left < right) {
             int temp = num[left];
             num[left] = num[right];
@@ -358,33 +349,37 @@ int partition(int num[], int start_index, int end_index) {
         }
     }
 
-    <!-- pivot和指针重合点进行交换 -->
+    // pivot和指针重合点进行交换 
     num[start_index] = num[left];
     num[left] = pivot;
 
     return left;
 }
 void quick_sort(int num[], int start_index, int end_index) {
-    <!-- 递归结束条件：start_index大于或等于end_index时 -->
+    // 递归结束条件：start_index大于或等于end_index时
     if(start_index >= end_index) {
         return;
     }
 
-    <!-- 得到基准元素位置 -->
+    // 得到基准元素位置
     int pivot_index = partition(num, start_index, end_index);
 
-    <!-- 根据基准元素，分成两部分进行递归排序 -->
+    // 根据基准元素，分成两部分进行递归排序
     quick_sort(num, start_index, pivot_index - 1);
     quick_sort(num, pivot_index + 1, end_index);
 }
 ```
 2. 单边循环法
 
-**首先选定基准元素pivot。同时设置一个mark指针指向数列起始位置（这个mark指针代表小于基准元素的区域边界）。接下来，从基准元素的下一个位置开始遍历数组，如果遍历到的元素大于基准元素，就继续往后遍历；如果遍历到的元素小于基准元素，则需要做两件事：①把mark指针右移1位（因为小于pivot的区域边界增大二楼1）；②让最新遍历到的元素和mark指针所在位置的元素交换位置（因为最新遍历的元素归属于小于pivot的区域）。**
-- 递归实现：
-```
+**首先选定基准元素pivot。同时设置一个mark指针指向数列起始位置（这个mark指针代表小于基准元素的区域边界）。**   
+**接下来，从基准元素的下一个位置开始遍历数组，如果遍历到的元素大于基准元素，就继续往后遍历；如果遍历到的元素小于基准元素，则需要做两件事：**
+- **①把mark指针右移1位（因为小于pivot的区域边界增大二楼1）；**   
+- **②让最新遍历到的元素和mark指针所在位置的元素交换位置（因为最新遍历的元素归属于小于pivot的区域）。**
+
+递归实现：
+```c++
 int partition(int num[], int start_index, int end_index) {
-    <!-- 取第1个位置（也可以选择随机位置）的元素作为基准元素 -->
+    // 取第1个位置（也可以选择随机位置）的元素作为基准元素 
     int pivot = num[start_index];
     int mark = start_index;
 
@@ -402,27 +397,27 @@ int partition(int num[], int start_index, int end_index) {
     return mark;
 }
 void quick_sort(int num[], int start_index, int end_index) {
-    <!-- 递归结束条件：start_index大于或等于end_index时 -->
+    // 递归结束条件：start_index大于或等于end_index时 
     if(start_index >= end_index) {
         return;
     }
 
-    <!-- 得到基准元素位置 -->
+    // 得到基准元素位置 
     int pivot_index = partition(num, start_index, end_index);
 
-    <!-- 根据基准元素，分成两部分进行递归排序 -->
+    // 根据基准元素，分成两部分进行递归排序 
     quick_sort(num, start_index, pivot_index - 1);
     quick_sort(num, pivot_index + 1, end_index);
 }
 ```
 - 非递归实现：(待完善)
-```
+```c++
 void quick_sort(int num[], int start_index, int end_index) {
-    <!-- 用一个集合栈来代替递归的函数栈 -->
+    // 用一个集合栈来代替递归的函数栈
     Stack<>
 }
 void partition(int num[], int start_index, int end_index) {
-    <!-- 取第1个位置（也可以选择随机位置）的元素作为基准元素 -->
+    //  取第1个位置（也可以选择随机位置）的元素作为基准元素
     int pivot = num[start_index];
     int mark = start_index;
 
@@ -441,15 +436,13 @@ void partition(int num[], int start_index, int end_index) {
 }
 ```
 ### 快速选择（待完善）
-其实快速选择法就是一种基于快速排序的选择方法，是一个典型的分治算法
-
+其实快速选择法就是一种基于快速排序的选择方法，是一个典型的分治算法   
 **我们知道快排的划分函数每次执行完后都能将数组分成两个部分，小于等于分界值 pivot 的元素的都会被放到数组的左边，大于的都会被放到数组的右边，然后返回分界值的下标。与快速排序不同的是，快速排序会根据分界值的下标递归处理划分的两侧，而这里我们只处理划分的一边。**
-
 - 分解： 将数组 a[left⋯right] 「划分」成两个子数组 a[left⋯q−1]、a[q+1⋯right]，使得 a[left⋯q−1] 中的每个元素小于等于 a[q]，且 a[q] 小于等于 a[q+1⋯right] 中的每个元素。其中，计算下标 q 也是「划分」过程的一部分。
 - 解决： 通过递归调用快速排序，对子数组 a[left⋯q−1] 和 a[q+1⋯right] 进行排序。
 - 合并： 因为子数组都是原址排序的，所以不需要进行合并操作，a[left⋯right] 已经有序。
 - 上文中提到的 「划分」 过程是：从子数组 a[left⋯right] 中选择任意一个元素 x 作为主元，调整子数组的元素使得左边的元素都小于等于它，右边的元素都大于等于它， x 的最终位置就是 q。
-```
+```c++
 int quickSelect(vector<int>& a, int l, int r, int index) {
         int q = randomPartition(a, l, r);
         if (q == index) {
@@ -489,7 +482,7 @@ int quickSelect(vector<int>& a, int l, int r, int index) {
 - 最好：O(n * logn)
 - 最坏：O(n * logn)
 - 平均：O(n * logn)
-```
+```c++
 void merge_sort(int num[], int left, int right) {
     while(left >= right)  return;
 
@@ -530,7 +523,7 @@ void merge_sort(int num[], int left, int right) {
     - 将堆顶元素与末尾元素进行交换，使末尾元素最大。然后继续调整堆，再将堆顶元素与末尾元素交换，得到第二大元素。如此反复进行交换、重建、交换。
 > [图解排序算法(三)之堆排序](https://www.cnblogs.com/chengxiao/p/6129630.html)   
 > [数据结构与算法：学习堆相关算法](https://blog.csdn.net/xiaolinnulidushu/article/details/104629479)
-```
+```c++
 void downAdjust(int arr[], int parent_index, int length) {
 
 }
@@ -539,11 +532,14 @@ void heap_sort(int arr[]) {
 }
 ```
 ### 计数排序
-**①新建一个数组，长度为无序数组的 最大值-最小值+1 ，全部值为0；②以无序数组的最小值作为一个偏移量，用来计算整数在计数数组中的下标：遍历无序数组，得到每一个元素，减去偏移量后得到一个值，在计数数组中对应该值的下标的元素+1；③遍历完无序数组后，计数数组中每一个下标位置+偏移量的值代表无序数列中对应整数出现的次数；④有了这个统计结果后，排序就很简单了。直接遍历计数数组，输出该数组元素的下标值（这里已经将无序数组的元素从小到大排序好了，因为下标正是从小到大的），元素的值是几，就输出几次（无序数组中有重复的元素就可以随之输出）。**
+**①新建一个数组，长度为无序数组的 最大值-最小值+1 ，全部值为0；**   
+**②以无序数组的最小值作为一个偏移量，用来计算整数在计数数组中的下标：遍历无序数组，得到每一个元素，减去偏移量后得到一个值，在计数数组中对应该值的下标的元素+1；**   
+**③遍历完无序数组后，计数数组中每一个下标位置+偏移量的值代表无序数列中对应整数出现的次数；**   
+**④有了这个统计结果后，排序就很简单了。直接遍历计数数组，输出该数组元素的下标值（这里已经将无序数组的元素从小到大排序好了，因为下标正是从小到大的），元素的值是几，就输出几次（无序数组中有重复的元素就可以随之输出）。**
 - 最好：O(n + k)，k是最大值和最小值的差
 - 平均：O(n + k)
 - 最坏：O(n + k)
-```
+```c++
 void count_sort(int arr[])
 {
     int len = sizeof(arr)/sizeof(int);
@@ -572,11 +568,12 @@ void count_sort(int arr[])
 }
 ```
 ### 桶排序(over)
-**①创建桶，并确定每一个桶的区间范围【（最大值 - 最小值） / 桶的数量 】；②遍历原始数列，计算每个元素应该放在哪个桶，将元素插入排序到对应桶内；③遍历所有的桶，输出所有元素。**
+**①创建桶，并确定每一个桶的区间范围【（最大值 - 最小值） / 桶的数量 】；**   
+**②遍历原始数列，计算每个元素应该放在哪个桶，将元素插入排序到对应桶内；③遍历所有的桶，输出所有元素。**
 - 最好：O(n)，每个数都在分布在一个桶里，这样就可以省略将数插入排序到桶里的时间(类似于计数排序以空间换时间)。
 - 最坏：O(n²)，所有的数都分布在一个桶里
 - 平均：O(n + k)，k表示桶的个数
-```
+```c++
 void bucket_sort(int arr[]) {
     int len = sizeof(arr)/sizeof(int);
     int max = arr[0], min = arr[0];
@@ -622,12 +619,12 @@ void bucket_sort(int arr[]) {
 }
 ```
 ### 基数排序（待完善）
-- ①找出无序数组的最大值，求出位数x，这就决定要分x次桶。（如果是数字，就分10个桶；如果是大小写字母，就分52个桶）。
-- ②先按最低位数找元素，并放进对应桶（该位数是n，就放进n号桶），全部元素进对应桶之后，按小桶先出、大桶后出；然后按下一个位数找位数，进桶...
-- ③分x次桶之后，全部元素出桶，就已经按从小到大排序好了。
-```
+**①找出无序数组的最大值，求出位数x，这就决定要分x次桶。（如果是数字，就分10个桶；如果是大小写字母，就分52个桶）。**   
+**②先按最低位数找元素，并放进对应桶（该位数是n，就放进n号桶），全部元素进对应桶之后，按小桶先出、大桶后出；然后按下一个位数找位数，进桶...**   
+**③分x次桶之后，全部元素出桶，就已经按从小到大排序好了。**
+```c++
 void radix_sort(int arr[]) {
-    <!-- int max = *max_element(arr, arr.end()); -->
+    //  int max = *max_element(arr, arr.end()); 
     int max_index = 0;
     while(max_index) {
         max_index++;
