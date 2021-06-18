@@ -74,7 +74,7 @@ int countPrimes(int n) {
     return count;
 }
 ```
-> 可学习：[质数](https://blog.csdn.net/weixin_42638946/article/details/115703334)
+> 可进一步了解：[质数](https://blog.csdn.net/weixin_42638946/article/details/115703334)
 ---
 ## 栈
 ### 单调队列
@@ -518,19 +518,54 @@ void merge_sort(int num[], int left, int right) {
 }
 ```
 ### 堆排序（待完善）
-- 将待排序序列构造成一个大顶堆，此时，整个序列的最大值就是堆顶的根节点。将其与末尾元素进行交换，此时末尾就为最大值。然后将剩余n-1个元素重新构造成一个堆，这样会得到n个元素的次小值。如此反复执行，便能得到一个有序序列了。
-    - 构造初始堆。将给定无序序列构造成一个大顶堆（一般升序采用大顶堆，降序采用小顶堆)。
-    - 将堆顶元素与末尾元素进行交换，使末尾元素最大。然后继续调整堆，再将堆顶元素与末尾元素交换，得到第二大元素。如此反复进行交换、重建、交换。
-> [图解排序算法(三)之堆排序](https://www.cnblogs.com/chengxiao/p/6129630.html)   
-> [数据结构与算法：学习堆相关算法](https://blog.csdn.net/xiaolinnulidushu/article/details/104629479)
-```c++
-void downAdjust(int arr[], int parent_index, int length) {
+堆的应用：
+- 求TopK的问题：给一个无序的数组，长度为N，  请输出最小 （或最大）的K个数。
+> [拜托，面试别再问我TopK了！！！](https://mp.weixin.qq.com/s/FFsvWXiaZK96PtUg-mmtEw)
+- 求中位数问题
 
+堆排序的思路：   
+**将待排序序列构造成一个大顶堆，此时，整个序列的最大值就是堆顶的根节点。将其与末尾元素进行交换，此时末尾就为最大值。然后将剩余n-1个元素重新构造成一个堆。如此反复执行，便能得到一个有序序列了。**
+- ①构造初始堆。将给定无序序列构造成一个大顶堆（一般升序采用大顶堆，降序采用小顶堆)。   
+- ②将堆顶元素与末尾元素进行交换，使末尾元素最大。然后继续调整堆，再将堆顶元素与末尾元素交换，得到第二大元素。如此反复进行交换、重建、交换。
+```c++
+void swap(int arr[], int a, int b){
+    int tmp = arr[a];
+    arr[a] = arr[b];
+    arr[b] = tmp;
+}
+void adjustHeap(int arr[], int i, int length) {
+    int tmp = arr[i]; // 先取出当前元素i
+    // 从 i 结点的左子结点开始，也就是 2i+1 处开始
+    for(int k = i * 2 + 1; k < length; k = k * 2 + 1){
+        // 如果左子结点小于右子结点，k 指向右子结点
+        if(k + 1 < length && arr[k] < arr[k+1]){
+            k++;
+        }
+        // 如果子节点大于父节点，将子节点值赋给父节点（不用进行交换）
+        if(arr[k] > tmp){
+            arr[i] = arr[k];
+            i = k;
+        } else {
+            break;
+        }
+    }
+    arr[i] = tmp;//将temp值放到最终的位置
 }
 void heap_sort(int arr[]) {
-    for(int i = 0; )
+    // 1.构建大顶堆
+    // 从最后一个非叶子结点开始，从下至上，从右至左调整结构
+    for(int i = arr.size() / 2 - 1; i >= 0; i--){
+        adjustHeap(arr, i, arr.size());
+    }
+    // 2.交换堆顶元素与末尾元素 + 调整堆结构
+    for(int j = arr.size() - 1; j > 0; j--){
+        swap(arr, 0, j); // 将堆顶元素与末尾元素进行交换
+        adjustHeap(arr, 0, j); // 重新对堆进行调整
+    }
 }
 ```
+> [数据结构与算法：学习堆相关算法](https://blog.csdn.net/xiaolinnulidushu/article/details/104629479)   
+> [图解排序算法(三)之堆排序](https://www.cnblogs.com/chengxiao/p/6129630.html)
 ### 计数排序
 **①新建一个数组，长度为无序数组的 最大值-最小值+1 ，全部值为0；**   
 **②以无序数组的最小值作为一个偏移量，用来计算整数在计数数组中的下标：遍历无序数组，得到每一个元素，减去偏移量后得到一个值，在计数数组中对应该值的下标的元素+1；**   
