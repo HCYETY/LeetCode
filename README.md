@@ -131,6 +131,7 @@ int Sunday(string soString, string nowString) {
 }
 ```
 > 可参考：[字符串匹配——Sunday算法](https://blog.csdn.net/q547550831/article/details/51860017)
+> [练习：LeetCode 实现 strStr()](https://leetcode-cn.com/problems/implement-strstr/)（重做一遍）
 ---
 ## 栈
 ### 单调队列
