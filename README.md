@@ -1,4 +1,32 @@
-# 算法集合圈
+# 算法集合圈 <!-- omit in toc -->
+    目录
+- [计数质数](#计数质数)
+  - [常规枚举](#常规枚举)
+  - [厄拉多塞筛法，简称埃氏筛](#厄拉多塞筛法简称埃氏筛)
+- [字符串匹配算法](#字符串匹配算法)
+  - [KMP算法](#kmp算法)
+  - [BM算法](#bm算法)
+  - [Sunday算法](#sunday算法)
+- [栈](#栈)
+  - [单调队列](#单调队列)
+- [十大排序](#十大排序)
+  - [交换排序](#交换排序)
+  - [选择排序](#选择排序)
+  - [插入排序](#插入排序)
+  - [冒泡排序](#冒泡排序)
+  - [快速排序](#快速排序)
+  - [快速选择（待完善）](#快速选择待完善)
+  - [归并排序](#归并排序)
+  - [堆排序（待完善）](#堆排序待完善)
+  - [计数排序](#计数排序)
+  - [桶排序(over)](#桶排序over)
+  - [基数排序（待完善）](#基数排序待完善)
+
+======
+
+    正文
+
+======
 ## 计数质数
 ### 常规枚举
 暴力算法
@@ -48,8 +76,9 @@ int countPrimes(int n) {
     return count;
 }
 ```
-### 厄拉多塞筛法，简称埃氏筛
+### 厄拉多塞筛法，简称埃氏筛 
 **基本思路：将2~n中所有质数的倍数都删掉，剩余的数据就是质数。**   
+
 对 1 到 64 的质数的筛选过程：从 2 开始遍历，把 2 的倍数都标记为 false（表示不是素数），再从 2 的下一位素数 3 （未被标记为false的元素）开始也同样标记其倍数。以此类推，最后仍为 true 的则为素数。
 - ①新建一个大小为 64 的数组，初始值标记为true。
 - ②从 2 开始遍历。如果布尔值为false，说明不为质数；如果为true，则为质数，计算质数数量的值+1。
@@ -71,25 +100,27 @@ int countPrimes(int n) {
     return count;
 }
 ```
-> 可进一步了解：[质数](https://blog.csdn.net/weixin_42638946/article/details/115703334)
+> 可进一步了解：[质数](https://blog.csdn.net/weixin_42638946/article/details/115703334)   <!-- omit in toc --> 
 ---
-## KMP算法
+## 字符串匹配算法
+### KMP算法 
 > 先理解什么是KMP，可参考 -> [阮一峰的网络日志：字符串匹配的KMP算法](http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html)   
 > 想知道原理是怎么回事，可参考 -> [Matrix67：KMP算法详解](http://www.matrix67.com/blog/archives/115)   
 > 如果还有疑惑，（有足够的耐心），可浏览 - > [从头到尾彻底理解KMP](https://blog.csdn.net/v_july_v/article/details/7041827)
-## BM算法
+### BM算法
 既然知道了什么是KMP算法，那接下来的BM算法肯定是不能放过的了
 > 可参考 -> [阮一峰的网络日志：字符串匹配的 Boyer-Moore 算法](http://www.ruanyifeng.com/blog/2013/05/boyer-moore_string_search_algorithm.html)   
 > 代码实现 -> [Boyer-Moore 算法](https://ethsonliu.com/2019/11/boyer-moore.html)
-## Sunday算法
+### Sunday算法
 是对BM算法的进一步小幅优化。   
-**给定一个字符串soString为 "sundaynb searching" ，待比较的字符串nowString为 "search" 。**   
-**开始时，两个字符串左对齐，发现第二个字符不匹配，于是直接找到 n ，即 soString 中下标为 6 的字符，也就是 soString 中参与匹配的最末位字符的下一位字符。**   
-**然后发现 nowString 中并不存在 n ，于是 nowString 直接越过字符 n ，与 b 对齐准备开始下一次匹配**   
-**结果第一个字符就不匹配，继续看 soString 参与匹配的最末位字符的下一位字符，为 c ，（这时候重点来了）从右往左找（目的是为了找到最右出现的字符），发现nowString 中有 c ，（那么问题来了：我们已经看出可将 nowString 后移 2 位，即 c 与 c 对齐即可匹配成功，但计算机该怎么知道移动多少位呢）答案是应该移动【nowSting中最右的 c 到 nowString 末尾的距离 + 1】 = 【nowString的长度 - nowString中最右边的 c 的下标】**   
-**一移，对齐，哦吼，发现全部匹配上了，nice**
+**①给定一个字符串`soString`为 "sundaynb searching" ，待比较的字符串`nowString`为 "search" 。**   
+②开始时，两个字符串左对齐，发现第二个字符不匹配，于是**直接找到 n ，即 `soString` 中下标为 6 的字符，也就是 `soString` 中参与匹配的最末位字符的下一位字符。**   
+③然后发现 `nowString` 中并不存在 n ，**于是`nowString` 直接越过字符 n ，与 b 对齐准备开始下一次匹配**   
+④结果第一个字符就不匹配，继续看 `soString` 参与匹配的最末位字符的下一位字符，为 c ，**（这时候重点来了）从右往左找（目的是为了找到最右出现的字符），发现`nowString` 中有 c ，**（那么问题来了：我们已经看出可将 `nowString` 后移 2 位，即 c 与 c 对齐即可匹配成功，但计算机该怎么知道移动多少位呢）答案是应该**移动【`nowSting`中最右的 c 到 `nowString` 末尾的距离 + 1】 = 【`nowString`的长度 - `nowString`中最右边的 c 的下标】**   
+⑤一移，对齐，哦吼，发现全部匹配上了，nice
 - 平均：O(n)
 - 最差：O(n∗m) eg.主串：baaaabaaaabaaaabaaaa 模式串：aaaaa，每次匹配失败时，只让模式串向后移动一位再进行匹配
+
 代码实现：（理解）
 ```c++
 int maxNum = 1005;
@@ -109,7 +140,7 @@ int Sunday(string soString, string nowString) {
         res[nowString[i]] = len_now - i;
     }
 
-    // nowString开始位置在oString的哪里
+    // nowString开始位置在soString的哪里
     int s = 0;
     // nowString已经匹配到的位置
     int j;
@@ -130,8 +161,8 @@ int Sunday(string soString, string nowString) {
     return -1;
 }
 ```
-> 可参考：[字符串匹配——Sunday算法](https://blog.csdn.net/q547550831/article/details/51860017)
-> [练习：LeetCode 实现 strStr()](https://leetcode-cn.com/problems/implement-strstr/)（重做一遍）
+> 可参考：[字符串匹配——Sunday算法](https://blog.csdn.net/q547550831/article/details/51860017)  
+> [练习：LeetCode 实现 strStr()](https://leetcode-cn.com/problems/implement-strstr/)（重做一遍） <!-- omit in toc --> 
 ---
 ## 栈
 ### 单调队列
@@ -156,7 +187,7 @@ vector<int> nextGreaterElement(vector<int>& nums) {
 ```
 > 学习资料转载自@labuladong的LeetCode题解：[单调栈解决 Next Greater Number 一类问题](https://leetcode-cn.com/problems/next-greater-element-i/solution/dan-diao-zhan-jie-jue-next-greater-number-yi-lei-w/)
 
-- [练习：LeetCode 496. 下一个更大元素 I](https://leetcode-cn.com/problems/next-greater-element-i/)
+- [练习：LeetCode 496. 下一个更大元素 I](https://leetcode-cn.com/problems/next-greater-element-i/) <!-- omit in toc --> 
 ---
 ## 十大排序
 ### 交换排序
