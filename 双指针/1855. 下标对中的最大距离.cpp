@@ -37,6 +37,7 @@ nums1 和 nums2 都是 非递增 数组
 */
 
 
+// 双指针法
 class Solution {
 public:
     int maxDistance(vector<int>& nums1, vector<int>& nums2) {
@@ -59,3 +60,50 @@ public:
         return res;
     }
 };
+// 和上面那种解法差不多
+class Solution {
+    public int maxDistance(int[] nums1, int[] nums2) {
+        int len1 = nums1.size();
+        int len2 = nums2.size();
+        int L = 0;
+        int R = 0;
+        while (L < len1 && R < len2) {
+            if (nums1[L] > nums2[R]) {
+                L++;
+            }
+            R++;
+        }
+        return R - L - 1 >= 0 ? R - L - 1 : 0;
+    }
+}
+
+// 二分查找
+class Solution {
+public:
+    int maxDistance(vector<int> &nums1, vector<int> &nums2)
+{
+    int n1 = nums1.size();
+    int n2 = nums2.size();
+    int Max = 0;//不存在为0
+    //在nums2中找最小的大于等于nums1[i]的值的下标（下标大于等于i）
+    for(int i = 0; i < n1; ++i) {
+        int l = i;
+        int r = n2 - 1; //左闭右闭
+        int ansi = -1;
+        while (l <= r) {
+            int mid = (r - l) / 2 + l;
+            if (nums2[mid] < nums1[i]) { //太小,找大数
+                r = mid - 1;
+            }
+            else { //mid可行，查找是否有更小的mid
+                ansi = mid;
+                l = mid + 1;
+            }
+        }
+        if (ansi != -1)
+            Max = max(Max, abs(i - ansi));
+    }
+    return Max;
+}
+};
+
