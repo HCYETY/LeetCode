@@ -42,13 +42,15 @@ public:
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
+		  // 遇到最后的节点就开始 return ，此时 head 为5
         if (head == NULL || head->next == NULL) {
             return head;
         }
         ListNode* ret = reverseList(head->next);
-		  // 下一个节点指向当前节点
+		  // 对题目示例来说，这里的 head 是 4，并不是 5 ，因为 5 在递归判断语句下已经 return 了
+		  // 所以需要注意：是 4 的下一个节点也就是 5 ，5 的下一个节点要指向 4 ，这样才能实现反转
         head->next->next = head;
-		  // 尾结点定为 NULL
+		  // 然后 4 的下一个节点更改指向为 NULL ，相当于尾结点
         head->next = NULL;
         return ret;
     }
