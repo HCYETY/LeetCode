@@ -30,14 +30,26 @@
  * @return {number}
  */
 var numWays = function(n, relation, k) {
-    // 快速生成 n行k列 都是0的二维数组
-    const dp = new Array(k + 1).fill(0).map(() => new Array(n).fill(0));
-    dp[0][0] = 1;
-
-    for(let i = 1; i < k+1; i++){
-        for(let j = 0; j < relation.length; j++){
-            dp[i][relation[j][1]] += dp[i-1][relation[j][0]];
+    let dp = new Array(n).fill(0);
+    dp[0] = 1;
+    for (let i = 0; i < k; i++) {
+        const next = new Array(n).fill(0);
+        for (const [src, dst] of relation) {
+            next[dst] += dp[src];
         }
+        dp = next;
     }
-    return dp[k][n-1];
+    return dp[n - 1];
+
+
+    // // 快速生成 n行k列 都是0的二维数组
+    // const dp = new Array(k + 1).fill(0).map(() => new Array(n).fill(0));
+    // dp[0][0] = 1;
+
+    // for(let i = 1; i <= k; i++){
+    //     for(let j = 0; j < relation.length; j++){
+    //         dp[i][relation[j][1]] += dp[i-1][relation[j][0]];
+    //     }
+    // }
+    // return dp[k][n-1];
 };
