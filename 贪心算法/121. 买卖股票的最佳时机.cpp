@@ -1,3 +1,4 @@
+/*
 给定一个数组 prices ，它的第?i 个元素?prices[i] 表示一支给定股票第 i 天的价格。
 
 你只能选择 某一天 买入这只股票，并选择在 未来的某一个不同的日子 卖出该股票。设计一个算法来计算你所能获取的最大利润。
@@ -15,19 +16,53 @@
 输入：prices = [7,6,4,3,1]
 输出：0
 解释：在这种情况下, 没有交易完成, 所以最大利润为 0。
+*/
 
 
+// 一次遍历
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         int inf = 1e9;
         int minprice = inf;
         // 等同于int minprice = int(1e9);
+        
         int maxprofit = 0;
         for(int price: prices) {
             maxprofit = max(maxprofit, price - minprice);
             minprice = min(minprice, price);
         }
         return maxprofit;
+    }
+};
+// 动态规划
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        if (n == 0) return 0; // 边界条件
+        int minprice = prices[0];
+        vector<int> dp (n, 0);
+
+        for (int i = 1; i < n; i++){
+            minprice = min(minprice, prices[i]);
+            dp[i] = max(dp[i - 1], prices[i] - minprice);
+        }
+        return dp[n - 1];
+    }
+};
+// 动态规划优化
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        if (n == 0) return 0; // 边界条件
+        int minprice = prices[0],  profit = 0;
+
+        for (int i = 1; i < n; i++){
+            minprice = min(minprice, prices[i]);
+            profit = max(profit, prices[i]-minprice);
+        }
+        return profit;
     }
 };
