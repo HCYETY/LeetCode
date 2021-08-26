@@ -54,3 +54,28 @@ public:
     }
 };
 // 解法二：双指针
+// 设 headA 的不相交部分有 a 个节点，headB 的不相交部分有 b 个节点，两个链表相交的部分有 c 个节点
+// 每次遍历时两个链表都指向下一个节点
+// 1.如果链表相交且等长，则两个指针会同时到达两个链表的第一个公共节点，此时返回两个链表的第一个公共节点；
+// 2.如果链表相交且不等长，那么
+//   2.1 当 headA 被遍历完后接上 headB 然后继续遍历，此时指针移动了 a+c+b 次
+//   2.2 当 headB 被遍历完后接上 headA 然后继续遍历，此时指针移动了 b+c+a 次
+//   2.3 这时两个指针会同时到达两个链表的第一个公共节点，该节点也是两个指针第一次同时指向的节点，此时返回两个链表的第一个公共节点。
+// 3.如果链表不相交且等长，则两个指针会同时到达两个链表的尾节点，然后同时变成空值 null，此时返回 null；
+// 4.如果链表不相交且不等长，那么
+//   4.1 由于两个链表没有公共节点，两个指针也不会同时到达两个链表的尾节点，因此两个指针都会遍历完两个链表
+//   4.2 headA 指针移动了 m+n 次、headB 移动了 n+m 次之后，两个指针会同时变成空值 null，此时返回 null。
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (headA == nullptr || headB == nullptr) {
+            return nullptr;
+        }
+        ListNode *pA = headA, *pB = headB;
+        while (pA != pB) {
+            pA = pA == nullptr ? headB : pA->next;
+            pB = pB == nullptr ? headA : pB->next;
+        }
+        return pA;
+    }
+};
