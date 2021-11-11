@@ -49,3 +49,25 @@ public:
         return ans;
     }
 };
+
+//不明白这样做为什么不行
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        // int len = asteroids.size();
+        // vector<int> ans;
+        // for(int i = 0; i < len; i++) {
+        //     if (ans.empty() || ans.back() < 0 || asteroids[i] > 0) {
+        //         ans.push_back(asteroids[i]);
+        //     } else {
+        //         while (-asteroids[i] > ans.back()) {
+        //             ans.pop_back();
+        //         }
+        //         if (-asteroids[i] == ans.back()) {
+        //             ans.pop_back();
+        //         }
+        //     }
+        // }
+        // return ans;
+    }
+};
