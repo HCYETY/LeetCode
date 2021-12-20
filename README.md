@@ -7,6 +7,7 @@
   - [KMP算法](#kmp算法)
   - [BM算法](#bm算法)
   - [Sunday算法](#sunday算法)
+  - [Manacher 算法](#manacher-算法)
   - [文本比较算法：Needleman-Wunsch算法](#文本比较算法needleman-wunsch算法)
 - [### Smith-Waterman算法](#-smith-waterman算法)
 - [栈](#栈)
@@ -165,6 +166,9 @@ int Sunday(string soString, string nowString) {
 ```
 > 可参考：[字符串匹配——Sunday算法](https://blog.csdn.net/q547550831/article/details/51860017)  
 > [练习：LeetCode 实现 strStr()](https://leetcode-cn.com/problems/implement-strstr/)（重做一遍）
+
+### Manacher 算法
+
 ### 文本比较算法：Needleman-Wunsch算法
 ### Smith-Waterman算法
 ---
